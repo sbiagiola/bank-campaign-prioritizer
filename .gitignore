@@ -1,0 +1,28 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+.pytest_cache/
+catboost_info/
+
+# Downloadable benchmark data and reproducible model binaries
+data/raw/
+artifacts/models/
+
+# Machine-local configuration and credentials
+.agents/
+.claude/
+.codex/
+.aws/
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+.DS_Store
+.Rhistory

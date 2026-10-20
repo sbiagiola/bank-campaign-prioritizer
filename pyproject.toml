@@ -1,0 +1,26 @@
+[project]
+name = "bank-campaign-prioritizer"
+version = "0.1.0"
+description = "Chronological evaluation of bank marketing rankings under contact-capacity constraints"
+readme = "README.md"
+authors = [
+    { name = "sbiagiola", email = "biagiolaclaudio@hotmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "catboost>=1.2.10",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pandas>=3.0.6",
+    "pytest>=9.1.1",
+    "pyyaml>=6.0.3",
+    "requests>=2.34.2",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
+    "seaborn>=0.13.2",
+    "streamlit>=1.64.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.21,<0.13.0"]
+build-backend = "uv_build"

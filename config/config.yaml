@@ -1,0 +1,59 @@
+data:
+  raw_path: "data/raw/bank-additional/bank-additional-full.csv"
+  delimiter: ";"
+  target_col: "y"
+  target_positive_val: "yes"
+
+split:
+  train_pct: 0.60
+  selection_pct: 0.15
+  calibration_pct: 0.10
+  test_pct: 0.15
+
+features:
+  exclude:
+    - "duration"
+  categorical:
+    - "job"
+    - "marital"
+    - "education"
+    - "default"
+    - "housing"
+    - "loan"
+    - "contact"
+    - "month"
+    - "day_of_week"
+    - "poutcome"
+  numerical:
+    - "age"
+    - "campaign"
+    - "pdays"
+    - "previous"
+    - "emp.var.rate"
+    - "cons.price.idx"
+    - "cons.conf.idx"
+    - "euribor3m"
+    - "nr.employed"
+
+economics:
+  target_budget_pct: 0.20
+  net_margin_per_subscription: 150.0  # Assumed net lifetime margin per term deposit (EUR)
+  contact_cost: 5.0                  # Assumed cost per contact call (EUR)
+
+models:
+  logistic_regression:
+    C: 0.1
+    max_iter: 1000
+    solver: "lbfgs"
+    class_weight: "balanced"
+    random_state: 42
+  catboost:
+    iterations: 350
+    learning_rate: 0.05
+    depth: 5
+    auto_class_weights: "Balanced"
+    random_seed: 42
+    verbose: 0
+
+evaluation:
+  num_consecutive_blocks: 5
