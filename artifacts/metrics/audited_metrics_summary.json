@@ -1,0 +1,329 @@
+{
+  "audit_metadata": {
+    "rounding_rule": "int(round(0.20 * N_batch)) -> int(round(0.20 * 1236)) = 247 leads per batch (total 1,235 leads across 5 batches). In global top-k: int(round(0.20 * 6180)) = 1,236 leads.",
+    "tie_breaking_rule": "Stable sorting (mergesort), preserving original sequential arrival order among candidates with identical probability scores.",
+    "primary_policy": "Batch-by-batch prioritization (Top 20% locally selected within each sequential operational block of 1,236 leads).",
+    "secondary_policy": "Global prioritization (Top 20% selected from full 6,180 test leads pool simultaneously)."
+  },
+  "model_selection_ex_ante": {
+    "split": "Selection (15%, N=6,178, positives=794, prevalence=12.85%)",
+    "logistic_regression_raw": {
+      "recall_at_20pct": 0.0819,
+      "precision_at_20pct": 0.0526,
+      "lift_at_20pct": 0.4092,
+      "pr_auc": 0.0968,
+      "roc_auc": 0.3804,
+      "brier_score": 0.2
+    },
+    "catboost_raw": {
+      "recall_at_20pct": 0.1713,
+      "precision_at_20pct": 0.11,
+      "lift_at_20pct": 0.8561,
+      "pr_auc": 0.129,
+      "roc_auc": 0.4968,
+      "brier_score": 0.362
+    },
+    "selected_model_decision": "Historical audit note: raw CatBoost ranked above raw logistic regression on selection (Recall@20% 17.13% vs 8.19%, lift 0.856 vs 0.409, average precision 0.1290 vs 0.0968). Both were below random selection on Recall@20%. The pipeline records the comparison but does not implement an automatic deployment decision."
+  },
+  "batch_policy_exact_counts": {
+    "batch_1": {
+      "N": 1236,
+      "positives": 178,
+      "prevalence": 0.144,
+      "selected": 247,
+      "random_expected_positives": 35.5696,
+      "logistic_calibrated": {
+        "captured": 56,
+        "recall": 0.3146,
+        "precision": 0.2267,
+        "lift": 1.5743
+      },
+      "catboost_calibrated": {
+        "captured": 41,
+        "recall": 0.2303,
+        "precision": 0.166,
+        "lift": 1.1526
+      }
+    },
+    "batch_2": {
+      "N": 1236,
+      "positives": 444,
+      "prevalence": 0.3592,
+      "selected": 247,
+      "random_expected_positives": 88.7282,
+      "logistic_calibrated": {
+        "captured": 118,
+        "recall": 0.2658,
+        "precision": 0.4777,
+        "lift": 1.3299
+      },
+      "catboost_calibrated": {
+        "captured": 99,
+        "recall": 0.223,
+        "precision": 0.4008,
+        "lift": 1.1158
+      }
+    },
+    "batch_3": {
+      "N": 1236,
+      "positives": 477,
+      "prevalence": 0.3859,
+      "selected": 247,
+      "random_expected_positives": 95.3244,
+      "logistic_calibrated": {
+        "captured": 152,
+        "recall": 0.3187,
+        "precision": 0.6154,
+        "lift": 1.5946
+      },
+      "catboost_calibrated": {
+        "captured": 99,
+        "recall": 0.2075,
+        "precision": 0.4008,
+        "lift": 1.0386
+      }
+    },
+    "batch_4": {
+      "N": 1236,
+      "positives": 649,
+      "prevalence": 0.5251,
+      "selected": 247,
+      "random_expected_positives": 129.6942,
+      "logistic_calibrated": {
+        "captured": 131,
+        "recall": 0.2018,
+        "precision": 0.5304,
+        "lift": 1.0101
+      },
+      "catboost_calibrated": {
+        "captured": 138,
+        "recall": 0.2126,
+        "precision": 0.5587,
+        "lift": 1.064
+      }
+    },
+    "batch_5": {
+      "N": 1236,
+      "positives": 629,
+      "prevalence": 0.5089,
+      "selected": 247,
+      "random_expected_positives": 125.6974,
+      "logistic_calibrated": {
+        "captured": 187,
+        "recall": 0.2973,
+        "precision": 0.7571,
+        "lift": 1.4877
+      },
+      "catboost_calibrated": {
+        "captured": 148,
+        "recall": 0.2353,
+        "precision": 0.5992,
+        "lift": 1.1774
+      }
+    },
+    "aggregated_batch_totals": {
+      "total_observations": 6180,
+      "total_positives": 2377,
+      "overall_prevalence": 0.3846,
+      "total_selected": 1235,
+      "random_expected_total": 475.0138,
+      "logistic_calibrated": {
+        "total_captured": 644,
+        "aggregated_recall": 0.2709,
+        "aggregated_precision": 0.5215,
+        "aggregated_lift": 1.3557,
+        "difference_captured_vs_random_expected": 168.9862
+      },
+      "catboost_calibrated": {
+        "total_captured": 525,
+        "aggregated_recall": 0.2209,
+        "aggregated_precision": 0.4251,
+        "aggregated_lift": 1.1052,
+        "difference_captured_vs_random_expected": 49.9862
+      }
+    }
+  },
+  "global_policy_exact_counts": {
+    "total_observations": 6180,
+    "total_positives": 2377,
+    "overall_prevalence": 0.3846,
+    "total_selected": 1236,
+    "random_expected_total": 475.4045,
+    "logistic_calibrated": {
+      "total_captured": 551,
+      "recall_at_20pct": 0.2318,
+      "precision_at_20pct": 0.4458,
+      "lift_at_20pct": 1.159,
+      "difference_captured_vs_random_expected": 75.5955
+    },
+    "catboost_calibrated": {
+      "total_captured": 520,
+      "recall_at_20pct": 0.2188,
+      "precision_at_20pct": 0.4207,
+      "lift_at_20pct": 1.0938,
+      "difference_captured_vs_random_expected": 44.5955
+    }
+  },
+  "economic_simulation_batch_policy": {
+    "assumptions": {
+      "total_contacts": 1235,
+      "cost_per_contact_eur": 5.0,
+      "net_margin_per_subscription_eur": 150.0,
+      "total_operational_cost_eur": 6175.0
+    },
+    "random_baseline": {
+      "expected_subscriptions": 475.0138,
+      "gross_margin_eur": 71252.07,
+      "net_profit_eur": 65077.07,
+      "roi_pct": 1053.88
+    },
+    "logistic_calibrated": {
+      "captured_subscriptions": 644,
+      "gross_margin_eur": 96600.0,
+      "net_profit_eur": 90425.0,
+      "roi_pct": 1464.37,
+      "delta_net_profit_vs_random_eur": 25347.93
+    },
+    "catboost_calibrated": {
+      "captured_subscriptions": 525,
+      "gross_margin_eur": 78750.0,
+      "net_profit_eur": 72575.0,
+      "roi_pct": 1175.3,
+      "delta_net_profit_vs_random_eur": 7497.93
+    }
+  },
+  "score_distributions_and_brier": {
+    "train": {
+      "prevalence": 0.0481,
+      "logistic_raw": {
+        "mean": 0.4773,
+        "median": 0.4869,
+        "p25": 0.4015,
+        "p75": 0.5459,
+        "brier": 0.2342
+      },
+      "logistic_calibrated": {
+        "mean": 0.9971,
+        "median": 0.9974,
+        "p25": 0.9963,
+        "p75": 0.998,
+        "brier": 0.9463
+      },
+      "catboost_raw": {
+        "mean": 0.4774,
+        "median": 0.4841,
+        "p25": 0.4113,
+        "p75": 0.542,
+        "brier": 0.2321
+      },
+      "catboost_calibrated": {
+        "mean": 0.0642,
+        "median": 0.063,
+        "p25": 0.0572,
+        "p75": 0.071,
+        "brier": 0.0465
+      }
+    },
+    "selection": {
+      "prevalence": 0.1285,
+      "logistic_raw": {
+        "mean": 0.2079,
+        "median": 0.0019,
+        "p25": 0.0005,
+        "p75": 0.4244,
+        "brier": 0.2
+      },
+      "logistic_calibrated": {
+        "mean": 0.554,
+        "median": 0.3671,
+        "p25": 0.1248,
+        "p75": 0.9966,
+        "brier": 0.5354
+      },
+      "catboost_raw": {
+        "mean": 0.6222,
+        "median": 0.6312,
+        "p25": 0.6072,
+        "p75": 0.6496,
+        "brier": 0.362
+      },
+      "catboost_calibrated": {
+        "mean": 0.0504,
+        "median": 0.0492,
+        "p25": 0.0477,
+        "p75": 0.0513,
+        "brier": 0.1181
+      }
+    },
+    "calibration": {
+      "prevalence": 0.0682,
+      "logistic_raw": {
+        "mean": 0.0003,
+        "median": 0.0002,
+        "p25": 0.0002,
+        "p75": 0.0003,
+        "brier": 0.0682
+      },
+      "logistic_calibrated": {
+        "mean": 0.0682,
+        "median": 0.0653,
+        "p25": 0.0501,
+        "p75": 0.08,
+        "brier": 0.0627
+      },
+      "catboost_raw": {
+        "mean": 0.4365,
+        "median": 0.4413,
+        "p25": 0.4149,
+        "p75": 0.4592,
+        "brier": 0.201
+      },
+      "catboost_calibrated": {
+        "mean": 0.0682,
+        "median": 0.0676,
+        "p25": 0.0656,
+        "p75": 0.0706,
+        "brier": 0.0636
+      }
+    },
+    "test": {
+      "prevalence": 0.3846,
+      "logistic_raw": {
+        "mean": 0.0006,
+        "median": 0.0002,
+        "p25": 0.0,
+        "p75": 0.0006,
+        "brier": 0.3841
+      },
+      "logistic_calibrated": {
+        "mean": 0.1191,
+        "median": 0.0602,
+        "p25": 0.0043,
+        "p75": 0.1473,
+        "brier": 0.3279
+      },
+      "catboost_raw": {
+        "mean": 0.5189,
+        "median": 0.4645,
+        "p25": 0.4325,
+        "p75": 0.626,
+        "brier": 0.2637
+      },
+      "catboost_calibrated": {
+        "mean": 0.0606,
+        "median": 0.065,
+        "p25": 0.0497,
+        "p75": 0.0686,
+        "brier": 0.3424
+      }
+    },
+    "test_reference_benchmarks": {
+      "reference_1_ex_ante_constant_train_prev_4_81pct": {
+        "brier": 0.35
+      },
+      "reference_2_ex_post_diagnostic_test_prev_38_46pct": {
+        "brier": 0.2367
+      }
+    }
+  }
+}
